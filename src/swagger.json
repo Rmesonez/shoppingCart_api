@@ -1,0 +1,283 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Shopping Cart API",
+        "description": "API for shopping cart, with products, users and orders, where you can add, edit, delete and list.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:4000",
+            "description": "Local server"
+        }
+    ],
+    "paths":{
+        "/api/signup":{
+            "post":{
+                "tags":["Signup"],
+                "summary":"Create a new user",
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/signup"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"User created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                            "errorName": {
+                                "type": "string",
+                                "example": "Validation error"
+                            },
+                            "message": {
+                                "type": "array",
+                                "items": {
+                                "type": "string"
+                                }
+                            }
+                            }
+                        }
+                        }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login":{
+            "post":{
+                "tags":["Login"],
+                "summary":"Login user",
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/login"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"User logged in successfully"
+                    },
+                    "400": {
+                        "description": "Login Error",
+                        "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                            "errorName": {
+                                "type": "string",
+                                "example": "Validation error"
+                            },
+                            "message": {
+                                "type": "array",
+                                "items": {
+                                "type": "string"
+                                }
+                            }
+                            }
+                        }
+                        }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users":{
+            "get":{
+                "tags":["Users"],
+                "summary":"List all users",
+                "responses":{
+                    "200":{
+                        "description":"Users listed successfully"
+                    },
+                    "400": {
+                        "description": "Listing error",
+                        "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                            "errorName": {
+                                "type": "string",
+                                "example": "Validation error"
+                            },
+                            "message": {
+                                "type": "array",
+                                "items": {
+                                "type": "string"
+                                }
+                            }
+                            }
+                        }
+                        }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/:id":{
+            "put":{
+                "tags":["Update Users"],
+                "summary":"Update the avatar and username of a user",
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"id",
+                        "required":true,
+                        "description":"User id",
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/updateUser"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"User updated successfully"
+                    },
+                    "400": {
+                        "description": "Update error",
+                        "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                            "errorName": {
+                                "type": "string",
+                                "example": "Validation error"
+                            },
+                            "message": {
+                                "type": "array",
+                                "items": {
+                                "type": "string"
+                                }
+                            }
+                            }
+                        }
+                        }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/:id":{
+            "delete":{
+                "tags":["Delete Users"],
+                "summary":"Delete a user",
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"id",
+                        "required":true,
+                        "description":"User id",
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "204":{
+                        "description":"User deleted successfully"
+                    },
+                    "400": {
+                        "description": "Deleting User error",
+                        "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                            "errorName": {
+                                "type": "string",
+                                "example": "Validation error"
+                            },
+                            "message": {
+                                "type": "array",
+                                "items": {
+                                "type": "string"
+                                }
+                            }
+                            }
+                        }
+                        }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components":{
+        "schemas":{
+            "signup":{
+                "type":"object",
+                "properties":{
+                    "avatar":{
+                        "type":"string"
+                    },
+                    "username":{
+                        "type":"string"
+                    },
+                    "email":{
+                        "type":"string"
+                    },
+                    "password":{
+                        "type":"string"
+                    },
+                    "validated":{
+                        "type":"boolean"
+                    }
+                }
+            },
+            "login":{
+                "type":"object",
+                "properties":{
+                    "email":{
+                        "type":"string"
+                    },
+                    "password":{
+                        "type":"string"
+                    }
+                }
+            },
+            "updateUser":{
+                "type":"object",
+                "properties":{
+                    "avatar":{
+                        "type":"string"
+                    },
+                    "username":{
+                        "type":"string"
+                    }
+                }
+            }
+        }
+    },
+    "securitySchemes": {
+        "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+        }
+    }
+}
