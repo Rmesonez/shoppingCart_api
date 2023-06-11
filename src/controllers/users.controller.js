@@ -68,8 +68,22 @@ const deleteUser = async (req, res, next) => {
 const getUserById = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const user = await UserServices.getUserDataById(id);
+        const user = await UserServices.getUserDataById(id, {
+            attributes: {
+                exclude: ['password']
+            },
+            include: ['carts']
+        });
         res.status(200).json(user);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const allUsers = async (req, res, next) => {
+    try {
+        const usersList = await UserServices.getAllUsersData();
+        res.status(200).json(usersList);
     } catch (error) {
         next(error);
     }
@@ -80,6 +94,7 @@ module.exports = {
     updateUser,
     deleteUser,
     getUserById,
-    login
+    login,
+    allUsers
 };
 

@@ -19,7 +19,18 @@ const updateTotalPrice = async (cart_id) => {
     }
     }
 
+
+const updateStatus = async (cart_id) => {
+    try {
+        const status = await products_in_carts.update({ status: 'purchased' }, { where: { cart_id } });
+        return status;
+    } catch (error) {
+        console.log(error);
+    }
+    }
+
     module.exports = {
         createCart,
-        updateTotalPrice
+        updateTotalPrice,
+        updateStatus
     }

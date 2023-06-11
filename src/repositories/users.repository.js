@@ -1,4 +1,4 @@
-const { users } = require('../models');
+const { users, carts } = require('../models');
 
 const createUser = async (newUser) => {
     try {
@@ -25,6 +25,7 @@ const updateUser = async (id, userData) => {
     return user;
     }
 
+
 const deleteUser = async (id) => {
     const user = await users.destroy({
         where: { id },
@@ -32,10 +33,30 @@ const deleteUser = async (id) => {
     return user;
     }
 
+// const getUserById = async (id) => {
+//     const user = await users.findByPk(id);
+//     delete user.dataValues.password;
+//     return user;
+//     }
+
+//obtener un usuario por ir exluyendo el password de la respuesta e incluyendo el cart
 const getUserById = async (id) => {
-    const user = await users.findByPk(id);
+    const user = await users.findByPk(id
+    //     , {
+    //     attributes: {
+    //         exclude: ['password']
+    //     },
+    //     include: ['carts']
+    // }
+    );
     return user;
     }
+
+const getAllUsers = async () => {
+    const usersList = await users.findAll();
+    return usersList;
+    }
+
 
 
     module.exports = {
@@ -43,5 +64,6 @@ const getUserById = async (id) => {
         updateUser,
         deleteUser,
         getUserById,
-        login
+        login,
+        getAllUsers
     };

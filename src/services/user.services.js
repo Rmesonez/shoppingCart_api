@@ -48,6 +48,15 @@ class UserServices{
         }
     }
 
+    static async getAllUsersData(data){
+        try {
+            const usersList = await getAllUsers(data);
+            return usersList;
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
 
 module.exports = UserServices;

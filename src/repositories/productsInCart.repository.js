@@ -9,6 +9,7 @@ const createProductInCart = async (product) => {
     }
 }
 
+
 const updateQuantity = async (product_id) => {
     try {
         const productInCart = await products_in_carts.increment('quantity', {

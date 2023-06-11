@@ -18,7 +18,20 @@ const createProductInCart = async (req, res, next) => {
     }
 }
 
+
+const updateProductsStatus = async (req, res, next) => {
+    try {
+        const { id: cart_id } = req.params;
+        await CartServices.updateStatus(cart_id);
+        res.status(200).send();
+    } catch (error) {
+        next(error);
+    }
+}
+
+
 module.exports = {
     createCart,
-    createProductInCart
+    createProductInCart,
+    updateProductsStatus
 }

@@ -1,34 +1,46 @@
-const { products_in_orders, carts } = require('../models');
+const {  products_in_orders } = require('../models');
 
 
-const createProductInOrder = async (data) => {
-    const productInOrder = await products_in_orders.create(data);
-    return productInOrder;
+const createProductsInOrder = async (product) => {
+    try {
+        const newProductInOrder = await products_in_orders.create(product);
+        return newProductInOrder;
+    } catch (error) {
+        console.log(error);
     }
-
-const getOneProductInOrder = async (product_id) => {
-    const productInOrder = await products_in_orders.findOne({ where: { product_id } });
-    return productInOrder;
-    }
+}
 
 const updateQuantity = async (product_id) => {
-    const productInOrder = await products_in_orders.increment('quantity', { by: 1, where: { product_id } });
-    return productInOrder;
+    try {
+        const productInCart = await products_in_orders.increment('quantity', {
+            by: 1,
+            where: {
+                product_id: product_id
+            }
+        });
+        return productInCart;
+    } catch (error) {
+        console.log(error);
     }
+}
 
-//aactualizar el total_price de la orden con el total_price del modelo del carrito
-const updateTotal = async (cart_id, order_id) => {
-    const cart = await carts.findByPk(cart_id);
-    const order = await orders.findByPk(order_id);
-    order.total_price = cart.total_price;
-    await order.save();
-    return order;
+const updatePrice = async (product_id, price) => {
+    try {
+        const productInCart = await products_in_orders.increment('price', {
+            by: price,
+            where: {
+                product_id: product_id
+            }
+        });
+        return productInCart;
+    } catch (error) {
+        console.log(error);
     }
+}
 
 
 module.exports = { 
-    createProductInOrder,
-    getOneProductInOrder,
+    createProductsInOrder,
     updateQuantity,
-    updateTotal
+    updatePrice
 };

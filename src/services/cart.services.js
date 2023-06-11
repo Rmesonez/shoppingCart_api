@@ -1,4 +1,4 @@
-const { createCart, updateTotalPrice } = require('../repositories/carts.repository');
+const { createCart, updateTotalPrice, updateStatus } = require('../repositories/carts.repository');
 const { createProductInCart, updateQuantity, getOneProductInCart, updatePrice } = require('../repositories/productsInCart.repository');
 
 class CartServices {
@@ -25,6 +25,16 @@ class CartServices {
             throw error;
         }
     }
+
+    static async updateStatus(cart_id) {
+        try {
+            await updateStatus(cart_id);
+        } catch (error) {
+            throw error;
+        }
+    }
+    
+
 }
 
 module.exports = CartServices;
